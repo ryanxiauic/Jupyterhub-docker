@@ -40,15 +40,15 @@ RUN /bin/bash -c "source activate /opt/conda/envs/py2 && python -m ipykernel ins
 COPY account /root/account
 
 RUN chmod +x ~/account/useradd.sh && \
-    chmod +x ~/account/userdel.sh && \
+    chmod +x ~/account/userdel.sh && sync && \
     ~/account/useradd.sh
 
 COPY distribute /root/distribute
 
-RUN chmod +x ~/distribute/distribute.sh && \
+RUN chmod +x ~/distribute/distribute.sh && sync && \
     mkdir -p /srv/jupyterhub && \
     mkdir -p /srv/nbgrader/exchange && \
-    chmod ugo+rw /srv/nbgrader/exchange && \
+    chmod ugo+rw /srv/nbgrader/exchange && sync && \
     conda install -y -c conda-forge nbgrader
 
 COPY jupyterhub_config.py /srv/jupyterhub
